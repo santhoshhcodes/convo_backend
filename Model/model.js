@@ -28,6 +28,7 @@ const profileSchema = new Schema({
   image: { type: String }
 }, { timestamps: true });
 
+<<<<<<< HEAD
 const messageSchema = new Schema({
   sender: { type: Schema.Types.ObjectId, ref: "convo", required: true },
   receiver: { type: Schema.Types.ObjectId, ref: "convo", required: true },
@@ -64,3 +65,11 @@ const Profile = model("Profile", profileSchema);
 const Post = model("Post", postSchema); // NEW: Post model
 
 module.exports = { User, Request, Profile, Message, Post };
+=======
+const User = model("convo", userSchema);
+const Request = model("Request", requestSchema);
+const Profile = model("Profile", profileSchema);
+
+
+module.exports = { User, Request, Profile };
+>>>>>>> f37ee7e4cf386f6668c302a4b4fc23d7bc0ba189

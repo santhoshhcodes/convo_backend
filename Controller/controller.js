@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 const { User, Request, Profile, Message, Post } = require("../Model/model");
 
@@ -5,29 +6,55 @@ const { User, Request, Profile, Message, Post } = require("../Model/model");
 // const path = require("path");
 
 // ==================== User APIs ====================
+=======
+const { User, Request, Profile  } = require('../Model/model'); 
+
+
+>>>>>>> f37ee7e4cf386f6668c302a4b4fc23d7bc0ba189
 
 exports.getAll = async (req, res) => {
   try {
     const users = await User.find();
+<<<<<<< HEAD
     res.status(200).json(users);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
+=======
+    res.status(200).json(users); 
+  } catch (error) {
+    res.status(500).json({ message: error.message }); 
+  }
+};
+
+
+
+>>>>>>> f37ee7e4cf386f6668c302a4b4fc23d7bc0ba189
 exports.getById = async (req, res) => {
   try {
     const { id } = req.params;
     const user = await User.findById(id);
+<<<<<<< HEAD
     if (!user) return res.status(404).json({ message: "User not found" });
     res.status(200).json(user);
   } catch (error) {
     res.status(500).json({ message: error.message });
+=======
+    if(!user){
+      return res.status(404).json({ message: "User not found" });
+    }
+    return res.status(200).json(user);
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+>>>>>>> f37ee7e4cf386f6668c302a4b4fc23d7bc0ba189
   }
 };
 
 exports.create = async (req, res) => {
   const { username, password, gender, dob, email, phone } = req.body;
+<<<<<<< HEAD
   if (!username || !password || !dob || !email || !gender)
     return res.status(400).json({ message: "All fields are required" });
 
@@ -55,11 +82,44 @@ exports.create = async (req, res) => {
     res.status(201).json({ message: "User created successfully", user: newUser });
   } catch (error) {
     res.status(500).json({ message: error.message });
+=======
+  if (!username || !password || !dob || !email || !gender) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+  if (
+    typeof username !== "string" || typeof password !== "string" ||
+    typeof email !== "string" || typeof gender !== "string" ||
+    isNaN(Date.parse(dob))
+  ) {
+    return res.status(400).json({ message: "Invalid input types" });
+  }
+  if (username.length < 3 || username.length > 30) {
+    return res.status(400).json({ message: "Username must be between 3 and 30 characters" });
+  }
+  if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+    return res.status(400).json({ message: "Invalid email format" });
+  }
+  try {
+    const existingUser = await User.findOne({ username });
+    if (existingUser) {
+      return res.status(400).json({ message: "Username already taken" });
+    }
+    const existingEmail = await User.findOne({ email });
+    if (existingEmail) {
+      return res.status(400).json({ message: "Email already registered" });
+    }
+    const newUser = new User({ username, password, gender, dob, email, phone, createdAt: new Date(), updatedAt: new Date() });
+    await newUser.save();
+    return res.status(201).json({ message: "User created successfully", user: newUser });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+>>>>>>> f37ee7e4cf386f6668c302a4b4fc23d7bc0ba189
   }
 };
 
 exports.login = async (req, res) => {
   const { username, password } = req.body;
+<<<<<<< HEAD
   if (!username || !password) return res.status(400).json({ message: "All fields required" });
 
   try {
@@ -82,6 +142,36 @@ exports.postRequest = async (req, res) => {
 
     if (await Request.findOne({ from, to, status: "pending" }))
       return res.status(400).json({ message: "Request already sent" });
+=======
+  if (!username || !password) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+  try {
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(400).json({ message: "Invalid username" });
+    }
+    if (user.password !== password) {
+      return res.status(400).json({ message: "Incorrect password" });
+    }
+    return res.status(200).json({ message: "Login successful", user });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+exports.postRequest = async (req, res) => {
+  try {
+    const { from, to } = req.body;
+    if (from === to) {
+      return res.status(400).json({ message: "Cannot send request to yourself" });
+    }
+
+    const exists = await Request.findOne({ from, to, status: 'pending' });
+    if (exists) {
+      return res.status(400).json({ message: "Request already sent" });
+    }
+>>>>>>> f37ee7e4cf386f6668c302a4b4fc23d7bc0ba189
 
     const newReq = new Request({ from, to });
     await newReq.save();
@@ -94,13 +184,22 @@ exports.postRequest = async (req, res) => {
 exports.getRequests = async (req, res) => {
   try {
     const { userId } = req.query;
+<<<<<<< HEAD
     const requests = await Request.find({ to: userId }).populate("from", "username email").populate("to", "username email");
+=======
+
+    const requests = await Request.find({ to: userId })
+      .populate("from", "username email") 
+      .populate("to", "username email");   
+
+>>>>>>> f37ee7e4cf386f6668c302a4b4fc23d7bc0ba189
     res.status(200).json(requests);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
+<<<<<<< HEAD
 exports.patchRequest = async (req, res) => {
   try {
     const { requestId, status } = req.body;
@@ -109,6 +208,26 @@ exports.patchRequest = async (req, res) => {
 
     const request = await Request.findByIdAndUpdate(requestId, { status, updatedAt: new Date() }, { new: true });
     if (!request) return res.status(404).json({ message: "Request not found" });
+=======
+
+exports.patchRequest = async (req, res) => {
+  try {
+    const { requestId, status } = req.body;
+
+    if (!['pending', 'accepted', 'rejected'].includes(status)) {
+      return res.status(400).json({ message: "Invalid status" });
+    }
+
+    const request = await Request.findByIdAndUpdate(
+      requestId,
+      { status, updatedAt: new Date() },
+      { new: true }
+    );
+
+    if (!request) {
+      return res.status(404).json({ message: "Request not found" });
+    }
+>>>>>>> f37ee7e4cf386f6668c302a4b4fc23d7bc0ba189
 
     res.status(200).json({ message: "Request updated", request });
   } catch (error) {
@@ -116,6 +235,7 @@ exports.patchRequest = async (req, res) => {
   }
 };
 
+<<<<<<< HEAD
 exports.getUsersWithRequests = async (req, res) => {
   try {
     const { userId } = req.params;
@@ -148,11 +268,22 @@ exports.deleteUser = async (req, res) => {
     if (!doc) return res.json({ message: "No document found" });
 
     res.json({ message: "Document deleted", doc });
+=======
+exports.deleteUser = async (req, res) => {
+  try {
+    const {id} = req.body; 
+    const doc = await Model.findByIdAndDelete(id);
+    if(!doc){
+      return res.json({Message:'No document found'})
+    }  
+    return res.json({Message:'Document deleted', doc})
+>>>>>>> f37ee7e4cf386f6668c302a4b4fc23d7bc0ba189
   } catch (error) {
     res.json({ message: error.message });
   }
 };
 
+<<<<<<< HEAD
 // ==================== Profile APIs ====================
 // Update profile
 exports.updateProfile = async (req, res) => {
@@ -406,6 +537,24 @@ exports.deletePost = async (req, res) => {
     res.status(200).json({ message: "Post deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: error.message });
+=======
+exports.profile = async (req, res) => {
+  const { userId, bio, image } = req.body;
+  if (!userId) {
+    return res.status(400).json({ message: "User ID is required" });
+  }
+  try {
+    const user = await Model.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    const newProfile = new profileSchema({ userId, bio, image, createdAt: new Date(), updatedAt: new Date() });
+    await newProfile.save();
+    return res.status(201).json({ message: "Profile created successfully", profile: newProfile });
+  }
+  catch (error) {
+    return res.status(500).json({ message: error.message });
+>>>>>>> f37ee7e4cf386f6668c302a4b4fc23d7bc0ba189
   }
 };
 

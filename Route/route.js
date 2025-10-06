@@ -1,5 +1,11 @@
+<<<<<<< HEAD
 const express = require("express");
 const router = express.Router();
+=======
+const express = require('express');
+const { Router } = express;
+const router = Router();
+>>>>>>> f37ee7e4cf386f6668c302a4b4fc23d7bc0ba189
 const {
   getAll,
   create,
@@ -8,6 +14,7 @@ const {
   postRequest,
   getRequests,
   patchRequest,
+<<<<<<< HEAD
   updateProfile,
   getProfile,
   getUsersWithRequests,
@@ -51,3 +58,18 @@ router.post("/posts/comment", addComment);
 router.delete("/posts/delete", deletePost);
 
 module.exports = router;
+=======
+  profile
+} = require('../Controller/controller');
+
+router.get('/getAll', getAll);
+router.post('/create', create);
+router.delete('/delete', deleteUser);
+router.post('/login', login);
+router.post('/postRequest', postRequest);
+router.get('/getRequests', getRequests);
+router.patch('/patchRequest', patchRequest);
+router.post('/profile', profile);
+
+module.exports = router;
+>>>>>>> f37ee7e4cf386f6668c302a4b4fc23d7bc0ba189
