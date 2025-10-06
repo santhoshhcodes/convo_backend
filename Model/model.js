@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+﻿const mongoose = require('mongoose');
 const { Schema, model } = mongoose;
 
 const userSchema = new Schema({
@@ -8,6 +8,8 @@ const userSchema = new Schema({
   dob: { type: Date, required: true },
   email: { type: String, required: true, unique: true },
   phone: { type: String },
+  bio: { type: String, default: '' },
+  image: { type: String, default: '' },
   updatedAt: { type: Date, default: Date.now },
   createdAt: { type: Date, default: Date.now }
 }, { timestamps: true });
@@ -28,26 +30,25 @@ const profileSchema = new Schema({
   image: { type: String }
 }, { timestamps: true });
 
-<<<<<<< HEAD
 const messageSchema = new Schema({
-  sender: { type: Schema.Types.ObjectId, ref: "convo", required: true },
-  receiver: { type: Schema.Types.ObjectId, ref: "convo", required: true },
-  username: { type: Schema.Types.String, ref: "convo", required: true },
-  receivername: { type: Schema.Types.String, ref: "convo", required: true },
+  sender: { type: Schema.Types.ObjectId, ref: 'convo', required: true },
+  receiver: { type: Schema.Types.ObjectId, ref: 'convo', required: true },
+  username: { type: String, required: true },
+  receivername: { type: String, required: true },
   text: { type: String, required: true },
   status: {
     type: String,
-    enum: ["sent", "delivered", "seen"],
-    default: "sent"
+    enum: ['sent', 'delivered', 'seen'],
+    default: 'sent'
   }
 }, { timestamps: true });
 
-// NEW: Post Schema
+// Post Schema
 const postSchema = new Schema({
   userId: { type: Schema.Types.ObjectId, ref: 'convo', required: true },
   username: { type: String, required: true },
   content: { type: String, required: true },
-  image: { type: String }, // URL for post image
+  image: { type: String },
   likes: [{ type: Schema.Types.ObjectId, ref: 'convo' }],
   comments: [{
     userId: { type: Schema.Types.ObjectId, ref: 'convo', required: true },
@@ -58,18 +59,10 @@ const postSchema = new Schema({
   createdAt: { type: Date, default: Date.now }
 }, { timestamps: true });
 
-const Message = model("Message", messageSchema);
-const User = model("convo", userSchema);
-const Request = model("Request", requestSchema);
-const Profile = model("Profile", profileSchema);
-const Post = model("Post", postSchema); // NEW: Post model
+const User = model('convo', userSchema);
+const Request = model('Request', requestSchema);
+const Profile = model('Profile', profileSchema);
+const Message = model('Message', messageSchema);
+const Post = model('Post', postSchema);
 
 module.exports = { User, Request, Profile, Message, Post };
-=======
-const User = model("convo", userSchema);
-const Request = model("Request", requestSchema);
-const Profile = model("Profile", profileSchema);
-
-
-module.exports = { User, Request, Profile };
->>>>>>> f37ee7e4cf386f6668c302a4b4fc23d7bc0ba189

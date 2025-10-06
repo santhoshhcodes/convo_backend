@@ -1,11 +1,6 @@
-<<<<<<< HEAD
-const express = require("express");
-const router = express.Router();
-=======
+
 const express = require('express');
-const { Router } = express;
-const router = Router();
->>>>>>> f37ee7e4cf386f6668c302a4b4fc23d7bc0ba189
+const router = express.Router();
 const {
   getAll,
   create,
@@ -14,62 +9,45 @@ const {
   postRequest,
   getRequests,
   patchRequest,
-<<<<<<< HEAD
   updateProfile,
   getProfile,
   getUsersWithRequests,
   sendMessage, 
   getMessages,
-  // NEW: Post routes
   createPost,
   getAllPosts,
   getUserPosts,
   toggleLike,
   addComment,
   deletePost
-} = require("../Controller/controller");
-
-// --------- User routes ----------
-router.get("/getAll", getAll);
-router.post("/create", create);
-router.delete("/delete", deleteUser);
-router.post("/login", login);
-
-// --------- Request routes -------
-router.post("/postRequest", postRequest);
-router.get("/getRequests", getRequests);
-router.patch("/patchRequest", patchRequest);
-router.get("/getUsersWithRequests/:userId", getUsersWithRequests);
-
-// --------- Profile routes -------
-router.post("/profile", updateProfile);
-router.get("/profile", getProfile);
-
-// --------- Message routes -------
-router.post("/message/send", sendMessage);
-router.get("/messages/:sender/:receiver", getMessages);
-
-// --------- NEW: Post routes -------
-router.post("/posts/create", createPost);
-router.get("/posts", getAllPosts);
-router.get("/posts/user/:userId", getUserPosts);
-router.post("/posts/like", toggleLike);
-router.post("/posts/comment", addComment);
-router.delete("/posts/delete", deletePost);
-
-module.exports = router;
-=======
-  profile
 } = require('../Controller/controller');
 
+// --------- User routes ----------
 router.get('/getAll', getAll);
 router.post('/create', create);
 router.delete('/delete', deleteUser);
 router.post('/login', login);
+
+// --------- Request routes -------
 router.post('/postRequest', postRequest);
 router.get('/getRequests', getRequests);
 router.patch('/patchRequest', patchRequest);
-router.post('/profile', profile);
+router.get('/getUsersWithRequests/:userId', getUsersWithRequests);
+
+// --------- Profile routes -------
+router.put('/profile', updateProfile);
+router.get('/profile/:userId', getProfile);
+
+// --------- Message routes -------
+router.post('/message/send', sendMessage);
+router.get('/messages/:sender/:receiver', getMessages);
+
+// --------- Post routes -------
+router.post('/posts/create', createPost);
+router.get('/posts', getAllPosts);
+router.get('/posts/user/:userId', getUserPosts);
+router.patch('/posts/like', toggleLike);
+router.post('/posts/comment', addComment);
+router.delete('/posts/delete', deletePost);
 
 module.exports = router;
->>>>>>> f37ee7e4cf386f6668c302a4b4fc23d7bc0ba189

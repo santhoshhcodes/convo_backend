@@ -17,12 +17,8 @@
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.18.1",
-<<<<<<< HEAD
     "multer": "^2.0.2",
     "nodemon": "^3.1.10",
     "socket.io": "^4.8.1"
-=======
-    "nodemon": "^3.1.10"
->>>>>>> f37ee7e4cf386f6668c302a4b4fc23d7bc0ba189
   }
 }
